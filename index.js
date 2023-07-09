@@ -18,6 +18,21 @@ const Connection = async (req, res) => {
   return client;
 };
 const Client = await Connection();
+app.get("/", async (req, res) => {
+  const data = await Client.db("studentMentor")
+    .collection("mentor")
+    .find({})
+    .toArray();
+  const data2 = await Client.db("studentMentor")
+    .collection("students")
+    .find({})
+    .toArray();
+  const data3 = await Client.db("studentMentor")
+    .collection("studentsWithMentorList")
+    .find({})
+    .toArray();
+  res.send(data, data2, data3);
+});
 // Q1. API to create Mentor
 app.post("/create-mentor", async (req, res) => {
   // In postman body we have to pass object like {"mentorName":"maruthi K J","studentsAssigned":[]}
